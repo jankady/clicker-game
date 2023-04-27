@@ -60,7 +60,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>cz.kaduch.clickergame/cz.kaduch.clickergame.LogInStage</mainClass>
+                            <mainClass>cz.kaduch.clickergame/cz.kaduch.clickergame.Main</mainClass>
                         </configuration>
                     </execution>
                 </executions>

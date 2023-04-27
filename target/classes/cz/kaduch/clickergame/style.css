@@ -1,0 +1,29 @@
+.backgroundColor {
+    -fx-background-color: linear-gradient(to right, #3D1fB7, #372F56);
+}
+.textfield {
+    -fx-background-color: linear-gradient(to bottom, #e1dede, #d3c7c7);
+    -fx-font-size: 13px;
+    -fx-border-color: #4f38b0;
+    -fx-prompt-text-fill: #685c5c;
+}
+.textfield:focused {
+    -fx-background-color: #fff;
+}
+.buttonColor {
+    -fx-background-color: linear-gradient(to right, #3D1fB7, #372F56);
+    -fx-text-fill: #fff;
+}
+.buttonColor:hover {
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+    -fx-cursor: hand;
+
+}
+.signUpButton {
+    -fx-background-color: #fff;
+}
+.signUpButton:hover{
+    -fx-cursor: hand;
+    -fx-border-color: #c0bcbc;
+}

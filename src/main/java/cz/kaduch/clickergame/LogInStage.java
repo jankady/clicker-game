@@ -1,34 +1,33 @@
 package cz.kaduch.clickergame;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-public class LogInStage extends Application {
+public class LogInStage {
 
-    private static Stage stage;
+    @FXML
+    private TextField username;
+    @FXML
+    private PasswordField password;
+    @FXML
+    private Button logInButton;
+    @FXML
+    private Button signUpButton;
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        stage = primaryStage;
-        primaryStage.setResizable(false);
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-        stage.setResizable(false);
-        primaryStage.setTitle("Clicker Game");
-        primaryStage.setScene(new Scene(root, 800, 400));
-        primaryStage.show();
-    }
-    public void changeScene(String fxml) throws IOException {
-        Parent pane = FXMLLoader.load(getClass().getResource(fxml));
-        stage.getScene().setRoot(pane);
-    }
+    //Method for sgin up user to admin mode or casual
+    public void signUpUser() throws IOException {
+        String user=username.getText().toString().toLowerCase().trim();
+        String userPassword=password.getText().toString().trim();
 
-    public static void main(String[] args) {
-        launch();
-        System.out.println("čses");
+        if (user.equals("admin") && userPassword.equals("tajneHeslo")) {
+            Main m = new Main();
+            m.changeScene("admin.fxml");
+        } else if (user.equals("") && userPassword.equals("")) {
+            //name and password from database
+        }
     }
 }
