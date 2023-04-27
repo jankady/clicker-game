@@ -26,8 +26,10 @@ public class LogInStage {
         if (user.equals("admin") && userPassword.equals("tajneHeslo")) {
             Main m = new Main();
             m.changeScene("admin.fxml");
-        } else if (user.equals("") && userPassword.equals("")) {
+        } else if (user.equals("1") && userPassword.equals("1")) {
             //name and password from database
+        } else if (user.equals("")||userPassword.equals("")) {
+
         }
     }
 }
