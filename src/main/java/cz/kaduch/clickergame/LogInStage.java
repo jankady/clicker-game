@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class LogInStage extends Application {
 
     private static Stage stage;
 
@@ -17,8 +17,9 @@ public class HelloApplication extends Application {
         stage = primaryStage;
         primaryStage.setResizable(false);
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        stage.setResizable(false);
         primaryStage.setTitle("Clicker Game");
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(new Scene(root, 800, 400));
         primaryStage.show();
     }
     public void changeScene(String fxml) throws IOException {
@@ -28,5 +29,6 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         launch();
+        System.out.println("čses");
     }
 }
