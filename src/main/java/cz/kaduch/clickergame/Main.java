@@ -17,7 +17,6 @@ public class Main extends Application {
         stage = primaryStage;
         primaryStage.setResizable(false);
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-        stage.setResizable(false);
         primaryStage.setTitle("Clicker Game");
         primaryStage.setScene(new Scene(root, 800, 400));
         primaryStage.show();
