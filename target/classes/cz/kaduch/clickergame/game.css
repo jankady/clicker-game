@@ -1,0 +1,6 @@
+.background {
+    -fx-background-image: url("spaceImage.png");
+}
+.leftbackground {
+    -fx-background-color: linear-gradient(to right, #3D1fB7, #372F56);
+}
