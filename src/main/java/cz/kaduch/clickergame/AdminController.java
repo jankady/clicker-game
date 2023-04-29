@@ -1,4 +1,4 @@
 package cz.kaduch.clickergame;
 
-public class NewAccount {
+public class AdminController {
 }
