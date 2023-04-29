@@ -27,33 +27,20 @@ public class LogInStageController implements Initializable {
     private Label wrongMessage;
     Main m = new Main();
 
-    public void checkSignIn(ActionEvent event)throws IOException {
-        signInUser();
-    }
-
-    //Method for sign up user to admin mode or casual
-    public void signInUser() throws IOException {
-
-
-    }
-
-    public void signUpUser(ActionEvent event)throws IOException {
-        m.changeScene("NewAccount.fxml");
-    }
-
+    //checking if buttons were pressed if yes then it will change scene
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        String user=username.getText().toLowerCase().trim();
-        String userPassword=password.getText().trim();
+        //check if username and password are filled and change scene
         logInButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (user.equals("admin") && userPassword.equals("tajneHeslo")) {
-
-                    Utility.changeScene(event,"admin.fxml","admin",user);
-                } else if (user.equals("1") && userPassword.equals("1")) {
+                String user=username.getText().toLowerCase().trim();
+                String userPassword=password.getText().trim();
+                if (user.equals("admin") && userPassword.equals("tajneHeslo"))
+                    Utility.changeScene(event, "admin.fxml", "admin", user,1000,600);
+                else if (user.equals("1") && userPassword.equals("1")) {
                     //name and password from database
-                    Utility.changeScene(event,"game.fxml","game",user);
+                    Utility.changeScene(event,"game.fxml","game",user,1000,600);
 
                 } else if (user.isEmpty()||userPassword.isEmpty()) {
                     wrongMessage.setText("Please enter data");
@@ -64,6 +51,13 @@ public class LogInStageController implements Initializable {
             }
         });
 
+        //checking pressing new account button
+        signUpButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Utility.changeScene(event,"NewAccount.fxml","New Account",null,800,400);
+            }
+        });
 
     }
 }

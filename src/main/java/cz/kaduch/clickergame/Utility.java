@@ -11,7 +11,9 @@ import java.io.IOException;
 
 public class Utility {
 
-    public static void changeScene(ActionEvent event,String fxmlFile, String title, String username) {
+
+    //method for changing scene (I absolutely don't understand it )
+    public static void changeScene(ActionEvent event,String fxmlFile, String title, String username,int width, int height) {
         Parent root= null;
 
         try {
@@ -22,7 +24,7 @@ public class Utility {
         }
         Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle(title);
-        stage.setScene(new Scene(root,800,400));
+        stage.setScene(new Scene(root,width,height));
         stage.show();
 
     }
