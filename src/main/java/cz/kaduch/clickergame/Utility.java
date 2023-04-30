@@ -18,8 +18,8 @@ public class Utility {
             try {
                 FXMLLoader loader = new FXMLLoader(Utility.class.getResource(fxmlFile));
                 root = loader.load();
-//                GameController gameController = loader.getController();
-//                gameController.welcomeUser(username);
+                GameController gameController = loader.getController();
+                gameController.welcomeUser(username);
             } catch (IOException e) {
                 e.printStackTrace();
             }
