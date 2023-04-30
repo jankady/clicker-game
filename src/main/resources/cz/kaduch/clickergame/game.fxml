@@ -14,9 +14,39 @@
    <left>
       <AnchorPane prefHeight="600.0" prefWidth="364.0" styleClass="leftbackground" stylesheets="@game.css" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="welcome" prefHeight="95.0" prefWidth="364.0" text="welcome:  " textFill="WHITE">
+            <Label layoutX="50.0" layoutY="123.0" text="Buy Worker" textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="welcome" layoutX="35.0" prefHeight="95.0" prefWidth="329.0" text="welcome:  " textFill="WHITE">
                <font>
                   <Font size="37.0" />
+               </font>
+            </Label>
+            <Label layoutX="50.0" layoutY="293.0" text="Buy Factory" textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="51.0" layoutY="203.0" text="Buy Vehicle" textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="200.0" layoutY="123.0" text="OWNED: " textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="200.0" layoutY="203.0" text="OWNED: " textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="200.0" layoutY="293.0" text="OWNED: " textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
                </font>
             </Label>
          </children></AnchorPane>
