@@ -22,7 +22,6 @@ public class Utility {
                     GameController gameController = loader.getController();
                     gameController.welcomeUser(username);
                 }
-                System.out.println("right");
             } catch (IOException e) {
                 System.out.println("something is wrong");
                 e.printStackTrace();
