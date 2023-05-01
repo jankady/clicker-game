@@ -1,5 +1,6 @@
 package cz.kaduch.clickergame;
 
+import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -8,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,6 +40,7 @@ public class GameController implements Initializable {
     private int numberOfWorkers;
     private int numberOfCars;
     private int numberOfFactories;
+    private boolean animationPlaying=false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -47,7 +50,7 @@ public class GameController implements Initializable {
         backTo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Utility.changeScene(event, "admin.fxml", "Log In", null, 800, 400);
+                Utility.changeScene(event, "login.fxml", "Log In", null, 800, 400);
             }
         });
         //make meteroid clickable
@@ -55,13 +58,28 @@ public class GameController implements Initializable {
         asteroid.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                scoreNumber=scoreNumber+(numberOfWorkers*10)+(numberOfCars*1000)+(numberOfFactories*100000);
+               animation();
+                scoreNumber=scoreNumber+(numberOfWorkers+1)+(numberOfCars*1000)+(numberOfFactories*100000);
                 score.setText("Score: " + scoreNumber);
             }
         });
 
 
 
+    }
+    //when click on meteroit it will call this method and it will do animation, if user click more times it will
+    // only play animation once and play it after it finished
+    public void animation() {
+        ScaleTransition scale=new ScaleTransition(Duration.seconds(0.25),asteroid);
+        scale.setToX(1.2);
+        scale.setToY(1.2);
+        scale.setAutoReverse(true);
+        scale.setCycleCount(2);
+        if (!animationPlaying) {
+            animationPlaying=true;
+            scale.setOnFinished(e -> animationPlaying=false);
+            scale.play();
+        }
     }
 
     public void welcomeUser(String user) {
