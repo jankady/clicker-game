@@ -18,9 +18,13 @@ public class Utility {
             try {
                 FXMLLoader loader = new FXMLLoader(Utility.class.getResource(fxmlFile));
                 root = loader.load();
-                GameController gameController = loader.getController();
-                gameController.welcomeUser(username);
+                if (username!=null) {
+                    GameController gameController = loader.getController();
+                    gameController.welcomeUser(username);
+                }
+                System.out.println("right");
             } catch (IOException e) {
+                System.out.println("something is wrong");
                 e.printStackTrace();
             }
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

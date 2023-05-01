@@ -20,13 +20,19 @@ public class GameController implements Initializable {
     @FXML
     private Label welcome;
     @FXML
-    private Button backtoLogin;
+    private Button backTo;
     @FXML
     private Label worker;
     @FXML
     private Label vehicle;
     @FXML
     private Label factory;
+    @FXML
+    private Button btnWorker;
+    @FXML
+    private Button btnVehicle;
+    @FXML
+    private Button btnFactory;
 
     private int scoreNumber;
     private int numberOfWorkers;
@@ -36,20 +42,21 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+
+        // return back to log in stage
+        backTo.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Utility.changeScene(event, "admin.fxml", "Log In", null, 800, 400);
+            }
+        });
         //make meteroid clickable
         asteroid.setPickOnBounds(true);
         asteroid.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                scoreNumber++;
+                scoreNumber=scoreNumber+(numberOfWorkers*10)+(numberOfCars*1000)+(numberOfFactories*100000);
                 score.setText("Score: " + scoreNumber);
-            }
-        });
-        // return back to log in stage
-        backtoLogin.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Utility.changeScene(event, "login.fxml", "Log In", null, 800, 400);
             }
         });
 
