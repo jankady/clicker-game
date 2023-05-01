@@ -38,13 +38,14 @@ public class GameController implements Initializable {
 
     private int scoreNumber;
     private int numberOfWorkers;
-    private int numberOfCars;
+    private int numberOfVehicles;
     private int numberOfFactories;
-    private boolean animationPlaying=false;
+    private boolean animationPlaying = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        showStats();
 
         // return back to log in stage
         backTo.setOnAction(new EventHandler<ActionEvent>() {
@@ -53,34 +54,75 @@ public class GameController implements Initializable {
                 Utility.changeScene(event, "login.fxml", "Log In", null, 800, 400);
             }
         });
+
         //make meteroid clickable
-        asteroid.setPickOnBounds(true);
         asteroid.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-               animation();
-                scoreNumber=scoreNumber+(numberOfWorkers+1)+(numberOfCars*1000)+(numberOfFactories*100000);
-                score.setText("Score: " + scoreNumber);
+                asteroid.setPickOnBounds(true);
+                animation();
+                scoreNumber = scoreNumber + (numberOfWorkers + 1) + (numberOfVehicles * 1000) + (numberOfFactories * 100000);
+            }
+        });
+
+        btnWorker.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (scoreNumber >= 10) {
+                    scoreNumber = scoreNumber - 10;
+                    numberOfWorkers++;
+                }
+            }
+        });
+
+        btnVehicle.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (scoreNumber >= 1) {
+                    scoreNumber = scoreNumber - 1;
+                    numberOfVehicles++;
+                }
+            }
+        });
+
+        btnFactory.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (scoreNumber >= 1) {
+                    scoreNumber = scoreNumber - 1;
+                    numberOfFactories++;
+
+
+                }
             }
         });
 
 
-
     }
+
     //when click on meteroit it will call this method and it will do animation, if user click more times it will
     // only play animation once and play it after it finished
     public void animation() {
-        ScaleTransition scale=new ScaleTransition(Duration.seconds(0.25),asteroid);
+        ScaleTransition scale = new ScaleTransition(Duration.seconds(0.25), asteroid);
         scale.setToX(1.2);
         scale.setToY(1.2);
         scale.setAutoReverse(true);
         scale.setCycleCount(2);
         if (!animationPlaying) {
-            animationPlaying=true;
-            scale.setOnFinished(e -> animationPlaying=false);
+            animationPlaying = true;
+            scale.setOnFinished(e -> animationPlaying = false);
             scale.play();
         }
     }
+
+    //show all numbers like score and number of upgrades
+    public void showStats() {
+        worker.setText(String.valueOf(numberOfWorkers));
+        vehicle.setText(String.valueOf(numberOfVehicles));
+        factory.setText(String.valueOf(numberOfFactories));
+        score.setText("Score: " + scoreNumber);
+    }
+
 
     public void welcomeUser(String user) {
         welcome.setText("Welcome " + user);
