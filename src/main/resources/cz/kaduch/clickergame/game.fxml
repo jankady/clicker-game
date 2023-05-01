@@ -63,7 +63,7 @@
    <center>
       <AnchorPane prefHeight="600.0" prefWidth="661.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="score" layoutX="158.0" layoutY="511.0" prefHeight="75.0" prefWidth="295.0" text="Score: 0">
+            <Label fx:id="score" layoutX="158.0" layoutY="511.0" prefHeight="75.0" prefWidth="394.0" text="Score: 0">
                <font>
                   <Font size="52.0" />
                </font>
