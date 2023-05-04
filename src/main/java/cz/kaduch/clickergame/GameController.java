@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
@@ -49,12 +50,53 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        showStats();
+        setupGame();
 
         // return back to log in stage
         backTo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                Connection connection=null;
+                PreparedStatement preparedStatement=null;
+                ResultSet resultSet = null;
+
+                try {
+                    connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/clickergame", "root", "admin");
+                    preparedStatement= connection.prepareStatement("INSERT into main (score, worker, vehicle, factory) VALUES (?, ?, ?, ?)");
+                    preparedStatement.setInt(1,scoreNumber);
+                    preparedStatement.setInt(2,numberOfWorkers);
+                    preparedStatement.setInt(3,numberOfVehicles);
+                    preparedStatement.setInt(4,numberOfFactories);
+                    preparedStatement.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+
+                }  finally {
+                    if (resultSet != null) {
+                        try {
+                            resultSet.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (preparedStatement != null) {
+                        try {
+                            preparedStatement.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (connection != null) {
+                        try {
+                            connection.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+
+
                 Utility.changeScene(event, "login.fxml", "Log In", null, 800, 400);
             }
         });
@@ -132,20 +174,67 @@ public class GameController implements Initializable {
     }
 
     //show all numbers like score and number of upgrades
-    public void showStats() {
-        btnWorker.setText("Price " +workerPriceAlgorithm());
-        btnVehicle.setText("Price" +vehiclePriceAlgorithm());
-        btnFactory.setText("Price" +factoryPriceAlgorithm());
-        worker.setText(String.valueOf(numberOfWorkers));
-        vehicle.setText(String.valueOf(numberOfVehicles));
-        factory.setText(String.valueOf(numberOfFactories));
-        score.setText("Score: " + scoreNumber);
-    }
+    public void setupGame() {
+        Connection connection=null;
+        PreparedStatement preparedStatement=null;
+        ResultSet resultSet = null;
+
+        try {
+            connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/clickergame", "root", "admin");
+            preparedStatement = connection.prepareStatement("SELECT score, worker, vehicle, factory FROM main Order By id desc limit 1");
+            resultSet=preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                scoreNumber=resultSet.getInt("score");
+                numberOfWorkers=resultSet.getInt("worker");
+                numberOfVehicles=resultSet.getInt("vehicle");
+                numberOfFactories=resultSet.getInt("factory");
+            }
+
+            btnWorker.setText("Price " +workerPriceAlgorithm());
+            btnVehicle.setText("Price" +vehiclePriceAlgorithm());
+            btnFactory.setText("Price" +factoryPriceAlgorithm());
+            worker.setText(String.valueOf(numberOfWorkers));
+            vehicle.setText(String.valueOf(numberOfVehicles));
+            factory.setText(String.valueOf(numberOfFactories));
+            score.setText("Score: " + scoreNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            }
+
+        }
+
+
+
+
 
 
     public void welcomeUser(String user) {
         welcome.setText("Welcome " + user);
     }
+
     //formula is nextPrice= base price (number of bought items * multiplayer)
     //calculating next worker price
     public int workerPriceAlgorithm() {
@@ -162,5 +251,6 @@ public class GameController implements Initializable {
         factoryPrice = (int) (2000*((numberOfFactories+1)*1.17));
         return factoryPrice;
     }
+
 }
 

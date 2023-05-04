@@ -60,10 +60,13 @@ public class Utility {
             }
             // create new user in database
             else {
-                psInsert = connection.prepareStatement("INSERT INTO main (username, password,score) VALUES (?, ?, ?)");
+                psInsert = connection.prepareStatement("INSERT INTO main (username, password, score, worker, vehicle, factory) VALUES (?, ?, ?, ?, ?, ?)");
                 psInsert.setString(1, username);
                 psInsert.setString(2, password);
                 psInsert.setInt(3, 0);
+                psInsert.setInt(4,1);
+                psInsert.setInt(5,0);
+                psInsert.setInt(6,0);
                 psInsert.executeUpdate();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Sucessfull");
