@@ -31,11 +31,12 @@ public class LogInStageController implements Initializable {
         logInButton.setOnAction(event -> {
             String user = username.getText().toLowerCase().trim();
             String userPassword = password.getText().trim();
-            Utility.signInUser(event,user,userPassword);
            if (user.isEmpty() || userPassword.isEmpty()) {
                 wrongMessage.setText("Please enter data");
-            } else {
-                wrongMessage.setText("Wrong username or password");
+            } else if (!Utility.signInUser(event, user, userPassword)) {
+               wrongMessage.setText("Wrong username or password");
+           } else {
+               Utility.signInUser(event,user,userPassword);
             }
         });
 
