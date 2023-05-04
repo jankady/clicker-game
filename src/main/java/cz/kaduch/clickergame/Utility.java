@@ -47,7 +47,7 @@ public class Utility {
 
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clickergame", "root", "admin");  //connect to my SQL
-            psCheckUserExist = connection.prepareStatement("SELECT * from main-table WHERE username = ?"); // from my databse select all usernames, ?- is parameter
+            psCheckUserExist = connection.prepareStatement("SELECT * from main WHERE username = ?"); // from my databse select all usernames, ?- is parameter
             psCheckUserExist.setString(1, username); // check if username exist in my database 1 mean the number of ?, username is the parameter which i put there
             resultSet = psCheckUserExist.executeQuery(); // if this is empty it mean that that user dont exist
 
@@ -60,9 +60,10 @@ public class Utility {
             }
             // create new user in database
             else {
-                psInsert = connection.prepareStatement("INSERT INTO main-table (username, password VALUES (?, ?))");
+                psInsert = connection.prepareStatement("INSERT INTO main (username, password,score) VALUES (?, ?, ?)");
                 psInsert.setString(1, username);
                 psInsert.setString(2, password);
+                psInsert.setInt(3, 0);
                 psInsert.executeUpdate();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Sucessfull");
@@ -107,28 +108,25 @@ public class Utility {
     }
 
     //method for sign in existing user
-    public static void signInUser(ActionEvent event, String username, String password) {
+    public static boolean signInUser(ActionEvent event, String username, String password) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clickergame", "root", "admin");
-            preparedStatement = connection.prepareStatement("SELECT password FROM main-table WHERE username = ?");
+            preparedStatement = connection.prepareStatement("SELECT password FROM main WHERE username = ?");
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
-            if (!resultSet.isBeforeFirst()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("User not found");
-                alert.setContentText("This username was not found in the database");
-                alert.show();
-            } else {
-                while (resultSet.next()) { //loop through all usernames until its end
-                    String retrivedPassword = resultSet.getString("password");
-                    if (retrivedPassword.equals(password)) {
-                        Utility.changeScene(event,"game.fxml","game",username,1000,600);
-                    } else {
-                        System.out.println("wrong password");
-                    }
+//            if (!resultSet.isBeforeFirst()) {
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("User not found");
+//                alert.setContentText("This username was not found in the database");
+//                alert.show();
+//            } else {
+            while (resultSet.next()) { //loop through all usernames until its end
+                String retrivedPassword = resultSet.getString("password");
+                if (retrivedPassword.equals(password)) {
+                    Utility.changeScene(event, "game.fxml", "game", username, 1000, 600);
                 }
             }
         } catch (SQLException e) {
@@ -156,6 +154,6 @@ public class Utility {
                 }
             }
         }
-
+        return false;
     }
 }
