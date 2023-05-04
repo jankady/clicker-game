@@ -37,6 +37,7 @@ public class Utility {
 
 
     }
+
     //method for sign up new user
     public static void signUpUser(ActionEvent event, String username, String password) {
         Connection connection = null;
@@ -46,13 +47,13 @@ public class Utility {
 
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clickergame", "root", "admin");  //connect to my SQL
-            psCheckUserExist=connection.prepareStatement("SELECT * from main-table WHERE username = ?"); // from my databse select all usernames, ?- is parameter
-            psCheckUserExist.setString(1,username); // check if username exist in my database 1 mean the number of ?, username is the parameter which i put there
+            psCheckUserExist = connection.prepareStatement("SELECT * from main-table WHERE username = ?"); // from my databse select all usernames, ?- is parameter
+            psCheckUserExist.setString(1, username); // check if username exist in my database 1 mean the number of ?, username is the parameter which i put there
             resultSet = psCheckUserExist.executeQuery(); // if this is empty it mean that that user dont exist
 
             // throw allert if user exist
             if (resultSet.isBeforeFirst()) {
-                Alert alert=new Alert(Alert.AlertType.ERROR);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("User exist");
                 alert.setContentText("This user already exist, try different name");
                 alert.show();
@@ -63,9 +64,9 @@ public class Utility {
                 psInsert.setString(1, username);
                 psInsert.setString(2, password);
                 psInsert.executeUpdate();
-                Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Sucessfull");
-                alert.setContentText("Successfully created account "+username);
+                alert.setContentText("Successfully created account " + username);
                 alert.show();
                 Utility.changeScene(event, "login.fxml", "Log In", null, 800, 400);
             }
@@ -74,35 +75,31 @@ public class Utility {
         }
         // this will happend always and end connection to database or it could resume in overflow memory
         finally {
-            if (resultSet!=null) {
+            if (resultSet != null) {
                 try {
                     resultSet.close();
-                }
-                catch (SQLException e) {
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-            if (psCheckUserExist!=null) {
+            if (psCheckUserExist != null) {
                 try {
                     psCheckUserExist.close();
-                }
-                catch (SQLException e) {
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-            if (psInsert!=null) {
+            if (psInsert != null) {
                 try {
                     psInsert.close();
-                }
-                catch (SQLException e) {
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-            if (connection!=null) {
+            if (connection != null) {
                 try {
                     connection.close();
-                }
-                catch (SQLException e) {
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
@@ -110,5 +107,55 @@ public class Utility {
     }
 
     //method for sign in existing user
+    public static void signInUser(ActionEvent event, String username, String password) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clickergame", "root", "admin");
+            preparedStatement = connection.prepareStatement("SELECT password FROM main-table WHERE username = ?");
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+            if (!resultSet.isBeforeFirst()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("User not found");
+                alert.setContentText("This username was not found in the database");
+                alert.show();
+            } else {
+                while (resultSet.next()) { //loop through all usernames until its end
+                    String retrivedPassword = resultSet.getString("password");
+                    if (retrivedPassword.equals(password)) {
+                        Utility.changeScene(event,"game.fxml","game",username,1000,600);
+                    } else {
+                        System.out.println("wrong password");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
+    }
 }
