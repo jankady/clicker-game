@@ -47,6 +47,8 @@ public class GameController implements Initializable {
     private int vehiclePrice;
     private int factoryPrice;
 
+    private String username;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -62,11 +64,12 @@ public class GameController implements Initializable {
 
                 try {
                     connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/clickergame", "root", "admin");
-                    preparedStatement= connection.prepareStatement("INSERT into main (score, worker, vehicle, factory) VALUES (?, ?, ?, ?)");
+                    preparedStatement= connection.prepareStatement("UPDATE main SET score = ?, worker = ?, vehicle = ?, factory = ? where username= ?");
                     preparedStatement.setInt(1,scoreNumber);
                     preparedStatement.setInt(2,numberOfWorkers);
                     preparedStatement.setInt(3,numberOfVehicles);
                     preparedStatement.setInt(4,numberOfFactories);
+                    preparedStatement.setString(5,username);
                     preparedStatement.executeUpdate();
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -233,6 +236,7 @@ public class GameController implements Initializable {
 
     public void welcomeUser(String user) {
         welcome.setText("Welcome " + user);
+        username=user;
     }
 
     //formula is nextPrice= base price (number of bought items * multiplayer)
