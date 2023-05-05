@@ -4,3 +4,14 @@
 .leftbackground {
     -fx-background-color: linear-gradient(to right, #3D1fB7, #372F56);
 }
+.backToLogin {
+    -fx-background-color:transparent ;
+    -fx-border-color:black;
+    -fx-border-width: 2 2 2 2;
+    -fx-border-radius: 5;
+}
+.backToLogin:hover {
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+    -fx-cursor: hand;
+}

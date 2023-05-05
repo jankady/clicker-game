@@ -35,9 +35,9 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <Button fx:id="backTo" layoutX="79.0" layoutY="518.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="183.0" style="-fx-background-color: transparent;" text="Back to login" textFill="WHITE">
+            <Button fx:id="backTo" layoutX="79.0" layoutY="518.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="183.0" style="-fx-background-color: transparent;" styleClass="backToLogin" stylesheets="@game.css" text="Back to login" textFill="WHITE">
                <font>
-                  <Font size="20.0" />
+                  <Font name="System Bold" size="20.0" />
                </font>
             </Button>
             <Label fx:id="worker" layoutX="303.0" layoutY="124.0" textFill="WHITE">
