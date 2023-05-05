@@ -202,8 +202,8 @@ public class GameController implements Initializable {
             }
 
             btnWorker.setText("Price " +workerPriceAlgorithm());
-            btnVehicle.setText("Price" +vehiclePriceAlgorithm());
-            btnFactory.setText("Price" +factoryPriceAlgorithm());
+            btnVehicle.setText("Price " +vehiclePriceAlgorithm());
+            btnFactory.setText("Price " +factoryPriceAlgorithm());
             worker.setText(String.valueOf(numberOfWorkers));
             vehicle.setText(String.valueOf(numberOfVehicles));
             factory.setText(String.valueOf(numberOfFactories));
