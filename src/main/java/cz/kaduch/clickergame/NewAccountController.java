@@ -36,7 +36,13 @@ public class NewAccountController implements Initializable {
                 String userPassword = password.getText().trim();
                 String userRePassword = passwordReEnter.getText();
 
-                Utility.signUpUser(event,user,userPassword,userRePassword);
+                if (user.isEmpty()||userPassword.isEmpty()||userRePassword.isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Enter data");
+                    alert.setContentText("Fill in all fields");
+                    alert.show();
+                }
+                else Utility.signUpUser(event,user,userPassword,userRePassword);
             }
         });
 

@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Objects;
 
 
 @SuppressWarnings("GrazieInspection")
@@ -60,7 +61,7 @@ public class Utility {
                 alert.show();
             }
             // allert if the password do not match
-            else if (password!=rePassword) {
+            else if (!Objects.equals(password, rePassword)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Passwords don't match");
                 alert.setContentText("Passwords do not match, try enter them again");
