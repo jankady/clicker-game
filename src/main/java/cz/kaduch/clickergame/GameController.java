@@ -51,8 +51,7 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        setupGame();
+//        setupGame(username);
 
         // return back to log in stage
         backTo.setOnAction(new EventHandler<ActionEvent>() {
@@ -176,15 +175,24 @@ public class GameController implements Initializable {
         }
     }
 
+    public void welcomeUser(String user) {
+        welcome.setText("Welcome " + user);
+        username=user;
+
+    }
+
     //show all numbers like score and number of upgrades
-    public void setupGame() {
+    public void setupGame(String usernameData) {
         Connection connection=null;
         PreparedStatement preparedStatement=null;
         ResultSet resultSet = null;
 
         try {
+
             connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/clickergame", "root", "admin");
-            preparedStatement = connection.prepareStatement("SELECT score, worker, vehicle, factory FROM main Order By id desc limit 1");
+            preparedStatement = connection.prepareStatement("SELECT score, worker, vehicle, factory FROM main WHERE username = ?");
+//            System.out.println(usernameData);
+            preparedStatement.setString(1,usernameData);
             resultSet=preparedStatement.executeQuery();
             if (resultSet.next()) {
                 scoreNumber=resultSet.getInt("score");
@@ -230,14 +238,6 @@ public class GameController implements Initializable {
         }
 
 
-
-
-
-
-    public void welcomeUser(String user) {
-        welcome.setText("Welcome " + user);
-        username=user;
-    }
 
     //formula is nextPrice= base price (number of bought items * multiplayer)
     //calculating next worker price

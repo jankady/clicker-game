@@ -25,6 +25,7 @@ public class Utility {
             if (username != null) {
                 GameController gameController = loader.getController();
                 gameController.welcomeUser(username);
+                gameController.setupGame(username);
             }
         } catch (IOException e) {
             System.out.println("something is wrong");
