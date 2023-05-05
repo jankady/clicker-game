@@ -1,6 +1,7 @@
 package cz.kaduch.clickergame;
 
 import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -9,8 +10,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import javafx.scene.media.Media;
 
+
+import java.io.File;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -36,7 +41,6 @@ public class GameController implements Initializable {
     private Button btnVehicle;
     @FXML
     private Button btnFactory;
-
     private int scoreNumber;
     private int numberOfWorkers=1;
     private int numberOfVehicles;
@@ -51,7 +55,6 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        setupGame(username);
 
         // return back to log in stage
         backTo.setOnAction(new EventHandler<ActionEvent>() {
@@ -173,6 +176,16 @@ public class GameController implements Initializable {
             scale.setOnFinished(e -> animationPlaying = false);
             scale.play();
         }
+    }
+
+    public void animatedBackground() {
+        TranslateTransition translateTransition=new TranslateTransition();
+    }
+    public void musicBackground() {
+Media media=new Media(new File("music.mp3").toURI().toString());
+        MediaPlayer mediaPlayer=new MediaPlayer(media);
+        mediaPlayer.play();
+
     }
 
     public void welcomeUser(String user) {
