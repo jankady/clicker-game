@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -33,7 +34,9 @@ public class NewAccountController implements Initializable {
             public void handle(ActionEvent event) {
                 String user = username.getText().toLowerCase().trim();
                 String userPassword = password.getText().trim();
-                Utility.signUpUser(event,user,userPassword);
+                String userRePassword = passwordReEnter.getText();
+
+                Utility.signUpUser(event,user,userPassword,userRePassword);
             }
         });
 

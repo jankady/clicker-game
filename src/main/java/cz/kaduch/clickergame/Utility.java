@@ -40,7 +40,7 @@ public class Utility {
     }
 
     //method for sign up new user
-    public static void signUpUser(ActionEvent event, String username, String password) {
+    public static void signUpUser(ActionEvent event, String username, String password, String rePassword) {
         Connection connection = null;
         PreparedStatement psInsert = null;
         PreparedStatement psCheckUserExist = null;
@@ -57,6 +57,13 @@ public class Utility {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("User exist");
                 alert.setContentText("This user already exist, try different name");
+                alert.show();
+            }
+            // allert if the password do not match
+            else if (password!=rePassword) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Passwords don't match");
+                alert.setContentText("Passwords do not match, try enter them again");
                 alert.show();
             }
             // create new user in database
