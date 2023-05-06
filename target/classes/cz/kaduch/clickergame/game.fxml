@@ -15,7 +15,12 @@
    <children>
       <AnchorPane layoutX="365.0" layoutY="-3.0">
          <children>
-            <ImageView fx:id="background" fitHeight="608.0" fitWidth="635.0" layoutY="-1.0" pickOnBounds="true" smooth="false">
+            <ImageView fx:id="background2" fitHeight="608.0" fitWidth="635.0" layoutX="614.0" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@spaceImage.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="background1" fitHeight="608.0" fitWidth="637.0" pickOnBounds="true" smooth="false">
                <image>
                   <Image url="@spaceImage.png" />
                </image>

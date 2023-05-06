@@ -1,9 +1,6 @@
 package cz.kaduch.clickergame;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.ScaleTransition;
-import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,10 +18,13 @@ import java.io.File;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class GameController implements Initializable {
     @FXML
-    private ImageView background;
+    private ImageView background1;
+    @FXML
+    private ImageView background2;
     @FXML
     private ImageView asteroid;
     @FXML
@@ -183,21 +183,64 @@ public class GameController implements Initializable {
         }
     }
 
-    public void animatedBackground() {
-        TranslateTransition translate = new TranslateTransition(Duration.seconds(2),background);
-        translate.setByX(-60);
+//    public void animatedBackground() {
+//        TranslateTransition translate1 = new TranslateTransition(Duration.seconds(5), background1);
+//        TranslateTransition translate2 = new TranslateTransition(Duration.seconds(5), background2);
+//        TranslateTransition reset1 = new TranslateTransition(Duration.seconds(0), background1);
+//        TranslateTransition reset2 = new TranslateTransition(Duration.seconds(0), background2);
+//        translate1.setByX(-1280);
+//        translate2.setByX(-1280);
+//
+//        ParallelTransition parallelTransition = new ParallelTransition(translate1,translate2);
+//        parallelTransition.setCycleCount(Timeline.INDEFINITE);
+//
+//        double sceneX = background1.localToScene(background1.getBoundsInLocal()).getMinX();
+//        SequentialTransition sequentialTransition1 = new SequentialTransition(parallelTransition, reset1);
+//        sequentialTransition1.setCycleCount(Timeline.INDEFINITE);
+//
+//        double resetCoordinate1 = -650;
+//        background1.translateXProperty().addListener((obs, oldVal, newVal) -> {
+//            if (newVal.doubleValue() < resetCoordinate1) {
+//                reset1.setToX(640);
+//                sequentialTransition1.playFromStart();
+//            }
+//        });
+//        double resetCoordinate2 = -1300;
+//        background2.translateXProperty().addListener((obs, oldVal, newVal) -> {
+//            if (newVal.doubleValue() < resetCoordinate2) {
+//                reset2.setToX(640);
+//                sequentialTransition1.playFromStart();
+//            }
+//        });
+//
+//        sequentialTransition1.play();
+//
+//    }
 
-        Timeline timeline= new Timeline();
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.setAutoReverse(false);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                translate.playFromStart();
-            }
-        }));
-        timeline.play();
-    }
+public void animatedBackground() {
+    background1.setLayoutX(0);
+    background2.setLayoutX(background1.getImage().getWidth());
+
+    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), event -> {
+        // pohyb obou obrázků doleva
+        background1.setTranslateX(background1.getTranslateX() - 1);
+        background2.setTranslateX(background2.getTranslateX() - 1);
+
+        // pokud první ImageView komponenta překročí levý okraj okna, posune se za druhou komponentu
+        if (background1.getBoundsInParent().getMaxX() <= 0) {
+            background1.setTranslateX(1500);
+        }
+
+        // pokud druhá ImageView komponenta překročí levý okraj okna, posune se za první komponentu
+        if (background2.getBoundsInParent().getMaxX() <= 0) {
+            background2.setTranslateX(1500);
+        }
+    }));
+
+    timeline.setCycleCount(Timeline.INDEFINITE);
+    timeline.play();
+}
+
 
     public void welcomeUser(String user) {
         welcome.setText("Welcome " + user);
