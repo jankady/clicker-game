@@ -1,5 +1,20 @@
 .background {
     -fx-background-image: url("spaceImage.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-animation-name: slide;
+    -fx-animation-duration: 20s;
+    -fx-animation-timing-function: linear;
+    -fx-animation-iteration-count: infinite;
+}
+@keyframes slide {
+    from {
+        -fx-background-position: 0 0 ;
+    }
+    to {
+        -fx-background-position: -1000px 0;
+    }
 }
 
 .leftbackground {

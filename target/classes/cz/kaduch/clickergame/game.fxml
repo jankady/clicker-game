@@ -11,7 +11,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="background" stylesheets="@game.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.kaduch.clickergame.GameController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.kaduch.clickergame.GameController">
    <left>
       <AnchorPane prefHeight="600.0" prefWidth="364.0" styleClass="leftbackground" stylesheets="@game.css" BorderPane.alignment="CENTER">
          <children>
@@ -63,6 +63,16 @@
    <center>
       <AnchorPane prefHeight="600.0" prefWidth="661.0" BorderPane.alignment="CENTER">
          <children>
+            <ImageView fx:id="background" fitHeight="608.0" fitWidth="635.0" layoutY="-1.0" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@spaceImage.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="asteroid" fitHeight="277.0" fitWidth="349.0" layoutX="191.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
+               <image>
+                  <Image url="@asteroid-transparent-background-7.png" />
+               </image>
+            </ImageView>
             <Label fx:id="score" layoutX="158.0" layoutY="511.0" prefHeight="75.0" prefWidth="394.0" text="Score: 0">
                <font>
                   <Font size="52.0" />
@@ -89,11 +99,6 @@
                   </LinearGradient>
                </textFill>
             </Label>
-            <ImageView fx:id="asteroid" fitHeight="277.0" fitWidth="349.0" layoutX="191.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
-               <image>
-                  <Image url="@asteroid-transparent-background-7.png" />
-               </image>
-            </ImageView>
          </children>
       </AnchorPane>
    </center>

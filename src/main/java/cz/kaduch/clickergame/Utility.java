@@ -39,6 +39,7 @@ public class Utility {
                 //dont repeat the song
                 if (mediaPlayer == null) {
                     mediaPlayer = musicBackground();
+                    mediaPlayer.play();
                 }
                 else {
                     mediaPlayer.stop();

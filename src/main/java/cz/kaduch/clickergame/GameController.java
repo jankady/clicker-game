@@ -1,6 +1,8 @@
 package cz.kaduch.clickergame;
 
+import javafx.animation.KeyFrame;
 import javafx.animation.ScaleTransition;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,6 +23,8 @@ import java.sql.*;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
+    @FXML
+    private ImageView background;
     @FXML
     private ImageView asteroid;
     @FXML
@@ -55,6 +59,8 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        animatedBackground();
+
         // return back to log in stage
         backTo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -139,7 +145,7 @@ public class GameController implements Initializable {
                     numberOfVehicles++;
                     vehicle.setText(String.valueOf(numberOfVehicles));
                     score.setText("Score: " + scoreNumber);
-                    btnVehicle.setText("Price" + vehiclePriceAlgorithm());
+                    btnVehicle.setText("Price " + vehiclePriceAlgorithm());
                 }
             }
         });
@@ -153,7 +159,7 @@ public class GameController implements Initializable {
                     numberOfFactories++;
                     factory.setText(String.valueOf(numberOfFactories));
                     score.setText("Score: " + scoreNumber);
-                    btnFactory.setText("Price" + factoryPriceAlgorithm());
+                    btnFactory.setText("Price " + factoryPriceAlgorithm());
                 }
             }
         });
@@ -178,10 +184,20 @@ public class GameController implements Initializable {
     }
 
     public void animatedBackground() {
-        TranslateTransition translateTransition = new TranslateTransition();
-    }
+        TranslateTransition translate = new TranslateTransition(Duration.seconds(2),background);
+        translate.setByX(-60);
 
-    // play music method
+        Timeline timeline= new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setAutoReverse(false);
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                translate.playFromStart();
+            }
+        }));
+        timeline.play();
+    }
 
     public void welcomeUser(String user) {
         welcome.setText("Welcome " + user);
