@@ -7,8 +7,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Objects;
@@ -17,22 +20,34 @@ import java.util.Objects;
 @SuppressWarnings("GrazieInspection")
 public class Utility {
 
+    private static MediaPlayer mediaPlayer;
+
+
     //method for changing scene (I absolutely don't understand it )
     public static void changeScene(ActionEvent event, String fxmlFile, String title, String username, int width, int height) {
         Parent root = null;
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         try {
             FXMLLoader loader = new FXMLLoader(Utility.class.getResource(fxmlFile));
             root = loader.load();
+            // works only if the username is filled which mean it will change stage to the game
             if (username != null) {
                 GameController gameController = loader.getController();
                 gameController.welcomeUser(username);
                 gameController.setupGame(username);
+                if (mediaPlayer == null) {
+                    mediaPlayer = musicBackground();
+                }
+                else {
+                    mediaPlayer.stop();
+                    mediaPlayer.play();
+                }
+
             }
         } catch (IOException e) {
             System.out.println("something is wrong");
             e.printStackTrace();
         }
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle(title);
         stage.setScene(new Scene(root, width, height));
         stage.show();
@@ -167,5 +182,12 @@ public class Utility {
             }
         }
         return false;
+    }
+    public static MediaPlayer musicBackground() {
+        Media media = new Media(new File("C:\\Users\\kaduc\\Desktop\\programvaciJazyky\\Java\\projects\\clickerGame\\src\\main\\resources\\cz\\kaduch\\clickergame\\music.mp3").toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        return mediaPlayer;
     }
 }

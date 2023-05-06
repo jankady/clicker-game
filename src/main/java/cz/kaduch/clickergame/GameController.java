@@ -42,7 +42,7 @@ public class GameController implements Initializable {
     @FXML
     private Button btnFactory;
     private int scoreNumber;
-    private int numberOfWorkers=1;
+    private int numberOfWorkers = 1;
     private int numberOfVehicles;
     private int numberOfFactories;
     private boolean animationPlaying = false;
@@ -55,28 +55,27 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         // return back to log in stage
         backTo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Connection connection=null;
-                PreparedStatement preparedStatement=null;
+                Connection connection = null;
+                PreparedStatement preparedStatement = null;
                 ResultSet resultSet = null;
 
                 try {
-                    connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/clickergame", "root", "admin");
-                    preparedStatement= connection.prepareStatement("UPDATE main SET score = ?, worker = ?, vehicle = ?, factory = ? where username= ?");
-                    preparedStatement.setInt(1,scoreNumber);
-                    preparedStatement.setInt(2,numberOfWorkers);
-                    preparedStatement.setInt(3,numberOfVehicles);
-                    preparedStatement.setInt(4,numberOfFactories);
-                    preparedStatement.setString(5,username);
+                    connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clickergame", "root", "admin");
+                    preparedStatement = connection.prepareStatement("UPDATE main SET score = ?, worker = ?, vehicle = ?, factory = ? where username= ?");
+                    preparedStatement.setInt(1, scoreNumber);
+                    preparedStatement.setInt(2, numberOfWorkers);
+                    preparedStatement.setInt(3, numberOfVehicles);
+                    preparedStatement.setInt(4, numberOfFactories);
+                    preparedStatement.setString(5, username);
                     preparedStatement.executeUpdate();
                 } catch (SQLException e) {
                     e.printStackTrace();
 
-                }  finally {
+                } finally {
                     if (resultSet != null) {
                         try {
                             resultSet.close();
@@ -99,7 +98,6 @@ public class GameController implements Initializable {
                         }
                     }
                 }
-
 
 
                 Utility.changeScene(event, "login.fxml", "Log In", null, 800, 400);
@@ -127,7 +125,7 @@ public class GameController implements Initializable {
                     numberOfWorkers++;
                     worker.setText(String.valueOf(numberOfWorkers));
                     score.setText("Score: " + scoreNumber);
-                    btnWorker.setText("Price " +workerPriceAlgorithm());
+                    btnWorker.setText("Price " + workerPriceAlgorithm());
                 }
             }
         });
@@ -141,7 +139,7 @@ public class GameController implements Initializable {
                     numberOfVehicles++;
                     vehicle.setText(String.valueOf(numberOfVehicles));
                     score.setText("Score: " + scoreNumber);
-                    btnVehicle.setText("Price" +vehiclePriceAlgorithm());
+                    btnVehicle.setText("Price" + vehiclePriceAlgorithm());
                 }
             }
         });
@@ -155,13 +153,14 @@ public class GameController implements Initializable {
                     numberOfFactories++;
                     factory.setText(String.valueOf(numberOfFactories));
                     score.setText("Score: " + scoreNumber);
-                    btnFactory.setText("Price" +factoryPriceAlgorithm());
+                    btnFactory.setText("Price" + factoryPriceAlgorithm());
                 }
             }
         });
 
 
     }
+
 
     //when click on meteroit it will call this method and it will do animation, if user click more times it will
     // only play animation once and play it after it finished
@@ -179,52 +178,48 @@ public class GameController implements Initializable {
     }
 
     public void animatedBackground() {
-        TranslateTransition translateTransition=new TranslateTransition();
+        TranslateTransition translateTransition = new TranslateTransition();
     }
-    public void musicBackground() {
-Media media=new Media(new File("music.mp3").toURI().toString());
-        MediaPlayer mediaPlayer=new MediaPlayer(media);
-        mediaPlayer.play();
 
-    }
+    // play music method
 
     public void welcomeUser(String user) {
         welcome.setText("Welcome " + user);
-        username=user;
+        username = user;
 
     }
 
     //show all numbers like score and number of upgrades
     public void setupGame(String usernameData) {
-        Connection connection=null;
-        PreparedStatement preparedStatement=null;
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         try {
 
-            connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/clickergame", "root", "admin");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clickergame", "root", "admin");
             preparedStatement = connection.prepareStatement("SELECT score, worker, vehicle, factory FROM main WHERE username = ?");
 //            System.out.println(usernameData);
-            preparedStatement.setString(1,usernameData);
-            resultSet=preparedStatement.executeQuery();
+            preparedStatement.setString(1, usernameData);
+            resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                scoreNumber=resultSet.getInt("score");
-                numberOfWorkers=resultSet.getInt("worker");
-                numberOfVehicles=resultSet.getInt("vehicle");
-                numberOfFactories=resultSet.getInt("factory");
+                scoreNumber = resultSet.getInt("score");
+                numberOfWorkers = resultSet.getInt("worker");
+                numberOfVehicles = resultSet.getInt("vehicle");
+                numberOfFactories = resultSet.getInt("factory");
             }
 
-            btnWorker.setText("Price " +workerPriceAlgorithm());
-            btnVehicle.setText("Price " +vehiclePriceAlgorithm());
-            btnFactory.setText("Price " +factoryPriceAlgorithm());
+            btnWorker.setText("Price " + workerPriceAlgorithm());
+            btnVehicle.setText("Price " + vehiclePriceAlgorithm());
+            btnFactory.setText("Price " + factoryPriceAlgorithm());
             worker.setText(String.valueOf(numberOfWorkers));
             vehicle.setText(String.valueOf(numberOfVehicles));
             factory.setText(String.valueOf(numberOfFactories));
             score.setText("Score: " + scoreNumber);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
@@ -246,26 +241,27 @@ Media media=new Media(new File("music.mp3").toURI().toString());
                     e.printStackTrace();
                 }
             }
-            }
-
         }
 
+    }
 
 
     //formula is nextPrice= base price (number of bought items * multiplayer)
     //calculating next worker price
     public int workerPriceAlgorithm() {
-         workerPrice = (int) (10 * (numberOfWorkers*1.14));
+        workerPrice = (int) (10 * (numberOfWorkers * 1.14));
         return workerPrice;
     }
-//calculating next vehicle price
+
+    //calculating next vehicle price
     public int vehiclePriceAlgorithm() {
-        vehiclePrice= (int) (150*((numberOfVehicles+1)*1.15));
+        vehiclePrice = (int) (150 * ((numberOfVehicles + 1) * 1.15));
         return vehiclePrice;
     }
+
     //calculating next factory price
     public int factoryPriceAlgorithm() {
-        factoryPrice = (int) (2000*((numberOfFactories+1)*1.17));
+        factoryPrice = (int) (2000 * ((numberOfFactories + 1) * 1.17));
         return factoryPrice;
     }
 
