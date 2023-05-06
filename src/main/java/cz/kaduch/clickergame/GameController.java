@@ -110,7 +110,7 @@ public class GameController implements Initializable {
             public void handle(MouseEvent event) {
                 asteroid.setPickOnBounds(true);
                 animation();
-                scoreNumber = scoreNumber + (numberOfWorkers) + (numberOfVehicles * 5) + (numberOfFactories * 20);
+                scoreNumber = scoreNumber + (numberOfWorkers) + (numberOfVehicles * 8) + (numberOfFactories * 190);
                 score.setText("Score: " + scoreNumber);
 
             }
