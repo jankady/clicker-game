@@ -11,7 +11,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.kaduch.clickergame.GameController">
    <children>
       <AnchorPane layoutX="365.0" layoutY="-3.0">
          <children>
@@ -95,9 +95,9 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button fx:id="btnWorker" layoutX="86.0" layoutY="114.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="95.0" styleClass="worker" stylesheets="@game.css" />
-            <Button fx:id="btnVehicle" layoutX="88.0" layoutY="201.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="92.0" styleClass="vehicle" stylesheets="@game.css" />
-            <Button fx:id="btnFactory" layoutX="88.0" layoutY="293.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="96.0" styleClass="factory" stylesheets="@game.css" />
+            <Button fx:id="btnWorker" layoutX="68.0" layoutY="114.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="113.0" styleClass="worker" stylesheets="@game.css" />
+            <Button fx:id="btnVehicle" layoutX="67.0" layoutY="201.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="113.0" styleClass="vehicle" stylesheets="@game.css" />
+            <Button fx:id="btnFactory" layoutX="61.0" layoutY="293.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="133.0" styleClass="factory" stylesheets="@game.css" />
          </children>
       </AnchorPane>
    </children>

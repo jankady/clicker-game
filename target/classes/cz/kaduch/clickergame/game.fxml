@@ -5,15 +5,55 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.kaduch.clickergame.GameController">
-   <left>
-      <AnchorPane prefHeight="600.0" prefWidth="364.0" styleClass="leftbackground" stylesheets="@game.css" BorderPane.alignment="CENTER">
+<Pane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.kaduch.clickergame.GameController">
+   <children>
+      <AnchorPane layoutX="365.0" layoutY="-3.0">
+         <children>
+            <ImageView fx:id="background" fitHeight="608.0" fitWidth="635.0" layoutY="-1.0" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@spaceImage.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="asteroid" fitHeight="277.0" fitWidth="349.0" layoutX="191.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
+               <image>
+                  <Image url="@asteroid-transparent-background-7.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="score" layoutX="158.0" layoutY="511.0" prefHeight="75.0" prefWidth="394.0" text="Score: 0">
+               <font>
+                  <Font size="52.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0" startX="1.0" startY="0.5639810426540285">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.6574400067329407" green="0.37439998984336853" blue="0.9599999785423279" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.006711409395973154">
+                           <color>
+                              <Color red="0.6574400067329407" green="0.37439998984336853" blue="0.9599999785423279" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.17909356951713562" green="0.4140472710132599" blue="0.9210526347160339" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="600.0" prefWidth="365.0" styleClass="leftbackground" stylesheets="@game.css">
          <children>
             <Label fx:id="welcome" layoutX="39.0" prefHeight="86.0" prefWidth="326.0" text="welcome:  " textFill="WHITE">
                <font>
@@ -55,51 +95,10 @@
                   <Font size="20.0" />
                </font>
             </Label>
-          <Button fx:id="btnWorker" layoutX="86.0" layoutY="114.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="95.0" styleClass="worker" stylesheets="@game.css" />
-            <Button fx:id="btnVehicle" layoutX="88.0" layoutY="201.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="92.0" styleClass="vehicle" stylesheets="@game.css" />
-            <Button fx:id="btnFactory" layoutX="88.0" layoutY="293.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="96.0" styleClass="factory" stylesheets="@game.css" />
-         </children></AnchorPane>
-   </left>
-   <center>
-      <AnchorPane prefHeight="600.0" prefWidth="661.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fx:id="background" fitHeight="608.0" fitWidth="635.0" layoutY="-1.0" pickOnBounds="true" smooth="false">
-               <image>
-                  <Image url="@spaceImage.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="asteroid" fitHeight="277.0" fitWidth="349.0" layoutX="191.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
-               <image>
-                  <Image url="@asteroid-transparent-background-7.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="score" layoutX="158.0" layoutY="511.0" prefHeight="75.0" prefWidth="394.0" text="Score: 0">
-               <font>
-                  <Font size="52.0" />
-               </font>
-               <textFill>
-                  <LinearGradient endX="1.0" endY="1.0" startX="1.0" startY="0.5639810426540285">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color red="0.6574400067329407" green="0.37439998984336853" blue="0.9599999785423279" />
-                           </color>
-                        </Stop>
-                        <Stop offset="0.006711409395973154">
-                           <color>
-                              <Color red="0.6574400067329407" green="0.37439998984336853" blue="0.9599999785423279" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="0.17909356951713562" green="0.4140472710132599" blue="0.9210526347160339" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </textFill>
-            </Label>
+            <Button fx:id="btnWorker" layoutX="68.0" layoutY="114.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="113.0" styleClass="worker" stylesheets="@game.css" />
+            <Button fx:id="btnVehicle" layoutX="67.0" layoutY="201.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="113.0" styleClass="vehicle" stylesheets="@game.css" />
+            <Button fx:id="btnFactory" layoutX="61.0" layoutY="293.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="133.0" styleClass="factory" stylesheets="@game.css" />
          </children>
       </AnchorPane>
-   </center>
-</BorderPane>
+   </children>
+</Pane>
