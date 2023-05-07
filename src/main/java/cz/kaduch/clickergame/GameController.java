@@ -59,6 +59,7 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         animatedBackground();
 
         // return back to log in stage
@@ -218,22 +219,23 @@ public class GameController implements Initializable {
 //    }
 
 public void animatedBackground() {
+        //setting layouts
     background1.setLayoutX(0);
-    background2.setLayoutX(background1.getImage().getWidth());
+    background2.setLayoutX(630);
 
     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), event -> {
-        // pohyb obou obrázků doleva
+        // move images to left by 1px
         background1.setTranslateX(background1.getTranslateX() - 1);
         background2.setTranslateX(background2.getTranslateX() - 1);
 
-        // pokud první ImageView komponenta překročí levý okraj okna, posune se za druhou komponentu
-        if (background1.getBoundsInParent().getMaxX() <= 0) {
-            background1.setTranslateX(1500);
+        // if first image reach 5 then move to 630
+        if (background1.getBoundsInParent().getMaxX() <= 5) {
+            background1.setTranslateX(630);
         }
 
-        // pokud druhá ImageView komponenta překročí levý okraj okna, posune se za první komponentu
-        if (background2.getBoundsInParent().getMaxX() <= 0) {
-            background2.setTranslateX(1500);
+        // if second image reach 2 then move to 0
+        if (background2.getBoundsInParent().getMaxX() <= 2) {
+            background2.setTranslateX(0);
         }
     }));
 
