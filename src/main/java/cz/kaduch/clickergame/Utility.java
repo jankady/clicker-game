@@ -1,7 +1,6 @@
 package cz.kaduch.clickergame;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -23,12 +22,12 @@ public class Utility {
     private static MediaPlayer mediaPlayer;
 
 
-    //method for changing scene (I absolutely don't understand it )
+    //method for changing scene
     public static void changeScene(ActionEvent event, String fxmlFile, String title, String username, int width, int height) {
         Parent root = null;
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // double cast this was copy
         try {
-            FXMLLoader loader = new FXMLLoader(Utility.class.getResource(fxmlFile));
+            FXMLLoader loader = new FXMLLoader(Utility.class.getResource(fxmlFile)); // load the fxml file we put in
             root = loader.load();
             // works only if the username is filled which mean it will change stage to the game
             if (username != null) {
@@ -37,16 +36,16 @@ public class Utility {
                 gameController.setupGame(username);
             }
         } catch (IOException e) {
-            System.out.println("something is wrong");
+//            System.out.println("something is wrong");
             e.printStackTrace();
         }
             // stop the song when change back
-        if (fxmlFile.equals("login.fxml") || fxmlFile.equals("NewAccount.fxml")) stopMusic();
+        if (fxmlFile.equals("login.fxml") || fxmlFile.equals("NewAccount.fxml")) stopMusic(); //stop music when we are not in game
         else startMusic();
 
         stage.setTitle(title);
-        stage.setScene(new Scene(root, width, height));
-        stage.show();
+        stage.setScene(new Scene(root, width, height)); //set scene
+        stage.show(); //show new stage
 
 
     }
@@ -137,18 +136,12 @@ public class Utility {
         ResultSet resultSet = null;
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clickergame", "root", "admin");
-            preparedStatement = connection.prepareStatement("SELECT password FROM main WHERE username = ?");
-            preparedStatement.setString(1, username);
-            resultSet = preparedStatement.executeQuery();
-//            if (!resultSet.isBeforeFirst()) {
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setTitle("User not found");
-//                alert.setContentText("This username was not found in the database");
-//                alert.show();
-//            } else {
+            preparedStatement = connection.prepareStatement("SELECT password FROM main WHERE username = ?"); //select password from the user
+            preparedStatement.setString(1, username); //fill the username
+            resultSet = preparedStatement.executeQuery(); //do the command
             while (resultSet.next()) { //loop through all usernames until its end
                 String retrivedPassword = resultSet.getString("password");
-                if (retrivedPassword.equals(password)) {
+                if (retrivedPassword.equals(password)) { //if match it will change scene to gmae
                     Utility.changeScene(event, "game.fxml", "game", username, 1000, 600);
                 }
             }
@@ -179,18 +172,19 @@ public class Utility {
         }
         return false;
     }
-    public static MediaPlayer musicBackground() {
 
+    //return mediaPlayer (song which will play)
+    public static MediaPlayer musicBackground() {
         stopMusic();
-//        Media media = new Media(new File("C:\\Users\\kaduc\\Desktop\\programvaciJazyky\\Java\\projects\\clickerGame\\src\\main\\resources\\cz\\kaduch\\clickergame\\music.mp3").toURI().toString());
-        Media media= new Media(Utility.class.getResource("/cz/kaduch/clickergame/music.mp3").toString());
+        Media media= new Media(Utility.class.getResource("/cz/kaduch/clickergame/music.mp3").toString()); //load file
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.volumeProperty();
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); //repeat
+        mediaPlayer.setVolume(0.3); //volume 30'%
         return mediaPlayer;
     }
 
+    // for starting music
     public static void startMusic() {
         if (mediaPlayer == null) {
             mediaPlayer = musicBackground();
@@ -199,6 +193,7 @@ public class Utility {
         }
     }
 
+    // for stopping music
     public static void stopMusic() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();

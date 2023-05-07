@@ -9,16 +9,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
-import javafx.scene.media.Media;
 
-
-import java.io.File;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 public class GameController implements Initializable {
     @FXML
@@ -184,66 +179,33 @@ public class GameController implements Initializable {
         }
     }
 
-//    public void animatedBackground() {
-//        TranslateTransition translate1 = new TranslateTransition(Duration.seconds(5), background1);
-//        TranslateTransition translate2 = new TranslateTransition(Duration.seconds(5), background2);
-//        TranslateTransition reset1 = new TranslateTransition(Duration.seconds(0), background1);
-//        TranslateTransition reset2 = new TranslateTransition(Duration.seconds(0), background2);
-//        translate1.setByX(-1280);
-//        translate2.setByX(-1280);
-//
-//        ParallelTransition parallelTransition = new ParallelTransition(translate1,translate2);
-//        parallelTransition.setCycleCount(Timeline.INDEFINITE);
-//
-//        double sceneX = background1.localToScene(background1.getBoundsInLocal()).getMinX();
-//        SequentialTransition sequentialTransition1 = new SequentialTransition(parallelTransition, reset1);
-//        sequentialTransition1.setCycleCount(Timeline.INDEFINITE);
-//
-//        double resetCoordinate1 = -650;
-//        background1.translateXProperty().addListener((obs, oldVal, newVal) -> {
-//            if (newVal.doubleValue() < resetCoordinate1) {
-//                reset1.setToX(640);
-//                sequentialTransition1.playFromStart();
-//            }
-//        });
-//        double resetCoordinate2 = -1300;
-//        background2.translateXProperty().addListener((obs, oldVal, newVal) -> {
-//            if (newVal.doubleValue() < resetCoordinate2) {
-//                reset2.setToX(640);
-//                sequentialTransition1.playFromStart();
-//            }
-//        });
-//
-//        sequentialTransition1.play();
-//
-//    }
-
-public void animatedBackground() {
+    //move 2 pictures so it looks infinite moving
+    public void animatedBackground() {
         //setting layouts
-    background1.setLayoutX(0);
-    background2.setLayoutX(630);
+        background1.setLayoutX(0);
+        background2.setLayoutX(630);
 
-    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), event -> {
-        // move images to left by 1px
-        background1.setTranslateX(background1.getTranslateX() - 1);
-        background2.setTranslateX(background2.getTranslateX() - 1);
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), event -> {
+            // move images to left by 1px
+            background1.setTranslateX(background1.getTranslateX() - 1);
+            background2.setTranslateX(background2.getTranslateX() - 1);
 
-        // if first image reach 5 then move to 630
-        if (background1.getBoundsInParent().getMaxX() <= 5) {
-            background1.setTranslateX(630);
-        }
+            // if first image reach 5 then move to 630
+            if (background1.getBoundsInParent().getMaxX() <= 2) {
+                background1.setTranslateX(630);
+            }
 
-        // if second image reach 2 then move to 0
-        if (background2.getBoundsInParent().getMaxX() <= 2) {
-            background2.setTranslateX(0);
-        }
-    }));
+            // if second image reach 2 then move to 0
+            if (background2.getBoundsInParent().getMaxX() <= 0) {
+                background2.setTranslateX(0);
+            }
+        }));
 
-    timeline.setCycleCount(Timeline.INDEFINITE);
-    timeline.play();
-}
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
 
-
+    //welcome user label
     public void welcomeUser(String user) {
         welcome.setText("Welcome " + user);
         username = user;

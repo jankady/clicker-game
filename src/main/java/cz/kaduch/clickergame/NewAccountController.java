@@ -29,6 +29,7 @@ public class NewAccountController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        // when click on signUp
         signUpButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -46,6 +47,7 @@ public class NewAccountController implements Initializable {
             }
         });
 
+        // back to login
         signInButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

@@ -24,13 +24,15 @@ public class LogInStageController implements Initializable {
     @FXML
     private Label wrongMessage;
 
-    //checking if buttons were pressed if yes then it will change scene
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         //check if username and password are filled and change scene
         logInButton.setOnAction(event -> {
+            // set the username and password which user filled into String
             String user = username.getText().toLowerCase().trim();
             String userPassword = password.getText().trim();
+
            if (user.isEmpty() || userPassword.isEmpty()) {
                 wrongMessage.setText("Please enter data");
             } else if (!Utility.signInUser(event, user, userPassword)) {
