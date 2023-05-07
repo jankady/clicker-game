@@ -35,6 +35,8 @@ public class LogInStageController implements Initializable {
                 wrongMessage.setText("Please enter data");
             } else if (!Utility.signInUser(event, user, userPassword)) {
                wrongMessage.setText("Wrong username or password");
+           } else if (user=="admin" && userPassword=="admin") {
+               // code for admin access
            } else {
                Utility.signInUser(event,user,userPassword);
             }

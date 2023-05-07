@@ -35,24 +35,15 @@ public class Utility {
                 GameController gameController = loader.getController();
                 gameController.welcomeUser(username);
                 gameController.setupGame(username);
-
-                //dont repeat the song
-                if (mediaPlayer == null) {
-                    mediaPlayer = musicBackground();
-                }
-                else {
-                    mediaPlayer.stop();
-                }
-
             }
         } catch (IOException e) {
             System.out.println("something is wrong");
             e.printStackTrace();
         }
             // stop the song when change back
-        if (fxmlFile.equals("login.fxml")) {
-            mediaPlayer.stop();
-        }
+        if (fxmlFile.equals("login.fxml") || fxmlFile.equals("NewAccount.fxml")) stopMusic();
+        else startMusic();
+
         stage.setTitle(title);
         stage.setScene(new Scene(root, width, height));
         stage.show();
@@ -189,6 +180,8 @@ public class Utility {
         return false;
     }
     public static MediaPlayer musicBackground() {
+
+        stopMusic();
 //        Media media = new Media(new File("C:\\Users\\kaduc\\Desktop\\programvaciJazyky\\Java\\projects\\clickerGame\\src\\main\\resources\\cz\\kaduch\\clickergame\\music.mp3").toURI().toString());
         Media media= new Media(Utility.class.getResource("/cz/kaduch/clickergame/music.mp3").toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
@@ -197,4 +190,19 @@ public class Utility {
         mediaPlayer.volumeProperty();
         return mediaPlayer;
     }
+
+    public static void startMusic() {
+        if (mediaPlayer == null) {
+            mediaPlayer = musicBackground();
+        } else {
+            mediaPlayer.play();
+        }
+    }
+
+    public static void stopMusic() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
+    }
+
 }

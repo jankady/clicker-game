@@ -1,7 +1,6 @@
 package cz.kaduch.clickergame;
 
-import javafx.animation.ScaleTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,8 +18,13 @@ import java.io.File;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class GameController implements Initializable {
+    @FXML
+    private ImageView background1;
+    @FXML
+    private ImageView background2;
     @FXML
     private ImageView asteroid;
     @FXML
@@ -55,6 +59,9 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        animatedBackground();
+
         // return back to log in stage
         backTo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -110,7 +117,7 @@ public class GameController implements Initializable {
             public void handle(MouseEvent event) {
                 asteroid.setPickOnBounds(true);
                 animation();
-                scoreNumber = scoreNumber + (numberOfWorkers) + (numberOfVehicles * 5) + (numberOfFactories * 20);
+                scoreNumber = scoreNumber + (numberOfWorkers) + (numberOfVehicles * 8) + (numberOfFactories * 190);
                 score.setText("Score: " + scoreNumber);
 
             }
@@ -139,7 +146,7 @@ public class GameController implements Initializable {
                     numberOfVehicles++;
                     vehicle.setText(String.valueOf(numberOfVehicles));
                     score.setText("Score: " + scoreNumber);
-                    btnVehicle.setText("Price" + vehiclePriceAlgorithm());
+                    btnVehicle.setText("Price " + vehiclePriceAlgorithm());
                 }
             }
         });
@@ -153,7 +160,7 @@ public class GameController implements Initializable {
                     numberOfFactories++;
                     factory.setText(String.valueOf(numberOfFactories));
                     score.setText("Score: " + scoreNumber);
-                    btnFactory.setText("Price" + factoryPriceAlgorithm());
+                    btnFactory.setText("Price " + factoryPriceAlgorithm());
                 }
             }
         });
@@ -177,11 +184,65 @@ public class GameController implements Initializable {
         }
     }
 
-    public void animatedBackground() {
-        TranslateTransition translateTransition = new TranslateTransition();
-    }
+//    public void animatedBackground() {
+//        TranslateTransition translate1 = new TranslateTransition(Duration.seconds(5), background1);
+//        TranslateTransition translate2 = new TranslateTransition(Duration.seconds(5), background2);
+//        TranslateTransition reset1 = new TranslateTransition(Duration.seconds(0), background1);
+//        TranslateTransition reset2 = new TranslateTransition(Duration.seconds(0), background2);
+//        translate1.setByX(-1280);
+//        translate2.setByX(-1280);
+//
+//        ParallelTransition parallelTransition = new ParallelTransition(translate1,translate2);
+//        parallelTransition.setCycleCount(Timeline.INDEFINITE);
+//
+//        double sceneX = background1.localToScene(background1.getBoundsInLocal()).getMinX();
+//        SequentialTransition sequentialTransition1 = new SequentialTransition(parallelTransition, reset1);
+//        sequentialTransition1.setCycleCount(Timeline.INDEFINITE);
+//
+//        double resetCoordinate1 = -650;
+//        background1.translateXProperty().addListener((obs, oldVal, newVal) -> {
+//            if (newVal.doubleValue() < resetCoordinate1) {
+//                reset1.setToX(640);
+//                sequentialTransition1.playFromStart();
+//            }
+//        });
+//        double resetCoordinate2 = -1300;
+//        background2.translateXProperty().addListener((obs, oldVal, newVal) -> {
+//            if (newVal.doubleValue() < resetCoordinate2) {
+//                reset2.setToX(640);
+//                sequentialTransition1.playFromStart();
+//            }
+//        });
+//
+//        sequentialTransition1.play();
+//
+//    }
 
-    // play music method
+public void animatedBackground() {
+        //setting layouts
+    background1.setLayoutX(0);
+    background2.setLayoutX(630);
+
+    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), event -> {
+        // move images to left by 1px
+        background1.setTranslateX(background1.getTranslateX() - 1);
+        background2.setTranslateX(background2.getTranslateX() - 1);
+
+        // if first image reach 5 then move to 630
+        if (background1.getBoundsInParent().getMaxX() <= 5) {
+            background1.setTranslateX(630);
+        }
+
+        // if second image reach 2 then move to 0
+        if (background2.getBoundsInParent().getMaxX() <= 2) {
+            background2.setTranslateX(0);
+        }
+    }));
+
+    timeline.setCycleCount(Timeline.INDEFINITE);
+    timeline.play();
+}
+
 
     public void welcomeUser(String user) {
         welcome.setText("Welcome " + user);
