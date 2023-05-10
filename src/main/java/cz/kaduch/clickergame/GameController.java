@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -16,6 +18,8 @@ import java.sql.*;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
+    @FXML
+    private Pane root;
     @FXML
     private ImageView background1;
     @FXML
@@ -45,11 +49,9 @@ public class GameController implements Initializable {
     private int numberOfVehicles;
     private int numberOfFactories;
     private boolean animationPlaying = false;
-
     private int workerPrice;
     private int vehiclePrice;
     private int factoryPrice;
-
     private String username;
 
     @Override
@@ -113,6 +115,7 @@ public class GameController implements Initializable {
                 asteroid.setPickOnBounds(true);
                 animation();
                 scoreNumber = scoreNumber + (numberOfWorkers) + (numberOfVehicles * 8) + (numberOfFactories * 190);
+                showScore();
                 score.setText("Score: " + scoreNumber);
 
             }
@@ -163,6 +166,18 @@ public class GameController implements Initializable {
 
     }
 
+    // show how much i earned by one click
+    public void showScore(){
+
+        Text text=new Text();
+        text.setText("ahoj");
+
+        text.setX(500);
+        text.setY(250);
+
+        root.getChildren().add(text);
+    }
+
 
     //when click on meteroit it will call this method and it will do animation, if user click more times it will
     // only play animation once and play it after it finished
@@ -195,7 +210,7 @@ public class GameController implements Initializable {
                 background1.setTranslateX(630);
             }
 
-            // if second image reach 2 then move to 0
+            // if second image reach 0 then move to 0
             if (background2.getBoundsInParent().getMaxX() <= 0) {
                 background2.setTranslateX(0);
             }
