@@ -10,11 +10,14 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.net.URL;
 import java.sql.*;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
@@ -169,13 +172,28 @@ public class GameController implements Initializable {
     // show how much i earned by one click
     public void showScore(){
 
+        //create text and set color and font
         Text text=new Text();
-        text.setText("ahoj");
+        int oneClick = (numberOfWorkers) + (numberOfVehicles * 8) + (numberOfFactories * 190);
+        text.setText("+"+oneClick);
+        text.setFont(Font.font(25));
+        text.setFill(Color.WHITE);
 
-        text.setX(500);
-        text.setY(250);
+        Random randomX=new Random();
+        Random randomY=new Random();
+
+        //random show text
+        text.setX(randomX.nextDouble(400)+400);
+        text.setY(randomY.nextDouble(400)+100);
 
         root.getChildren().add(text);
+
+        //animation where text move -70 on Y
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(2), text);
+        translateTransition.setByY(-70);
+        translateTransition.setOnFinished(event -> root.getChildren().remove(text)); //remove text when animation ends
+        translateTransition.play();
+
     }
 
 
